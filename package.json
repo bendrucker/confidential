@@ -1,0 +1,33 @@
+{
+  "name": "confidential",
+  "version": "1.0.0",
+  "description": "Load and cast flat key-value configuration (e.g. environment variables) into a hierarchical schema",
+  "main": "./src",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "traverse": "~0.6.6",
+    "xtend": "~4.0.0"
+  },
+  "devDependencies": {
+    "tape": "~3.5.0"
+  },
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bendrucker/confidential.git"
+  },
+  "keywords": [
+    "configuration",
+    "hierarchy"
+  ],
+  "author": "Ben Drucker <bvdrucker@gmail.com> (http://www.bendrucker.me/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bendrucker/confidential/issues"
+  },
+  "homepage": "https://github.com/bendrucker/confidential"
+}
