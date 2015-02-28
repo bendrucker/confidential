@@ -21,3 +21,16 @@ test('load configuration', function (t) {
   })
   t.end();
 });
+
+test('required properties', function (t) {
+  var schema = new Schema({
+    foo: {
+      bar: {
+        property: 'PROP',
+        required: true
+      }
+    }
+  });
+  t.throws(schema.parse.bind(schema, {}), /missing: PROP$/, 'throws with missing props');
+  t.end();
+});
