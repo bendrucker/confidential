@@ -18,7 +18,7 @@ test('load configuration', function (t) {
     foo: {
       bar: 'value'
     }
-  })
+  });
   t.end();
 });
 
