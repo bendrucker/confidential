@@ -7,12 +7,12 @@ test('load configuration', function (t) {
   var schema = new Schema({
     foo: {
       bar: {
-        property: 'PROP'
+        key: 'ENV_KEY'
       }
     }
   });
   var parsed = schema.parse({
-    PROP: 'value'
+    ENV_KEY: 'value'
   });
   t.deepEqual(parsed, {
     foo: {
@@ -22,15 +22,32 @@ test('load configuration', function (t) {
   t.end();
 });
 
+test('fills path even when config key is missing', function (t) {
+  var schema = new Schema({
+    foo: {
+      bar: {
+        key: 'VAL'
+      }
+    }
+  });
+  var parsed = schema.parse({});
+  t.deepEqual(parsed, {
+    foo: {
+      bar: undefined
+    }
+  });
+  t.end();
+});
+
 test('required properties', function (t) {
   var schema = new Schema({
     foo: {
       bar: {
-        property: 'PROP',
+        key: 'VAL',
         required: true
       }
     }
   });
-  t.throws(schema.parse.bind(schema, {}), /missing: PROP$/, 'throws with missing props');
+  t.throws(schema.parse.bind(schema, {}), /missing: VAL$/, 'throws with missing props');
   t.end();
 });

@@ -5,46 +5,44 @@ var extend     = require('xtend');
 var difference = require('array-differ');
 
 function Schema (schema) {
-  var self = this;
-  this.required = [];
   this.properties = traverse(schema)
-    .reduce(function (properties, value) {
-      if (isProperty(value)) {
-        var propertyConfig = extend(value, {
-          path: this.path
-        });
-        var property = propertyConfig.property;
-        properties[property] = propertyConfig;
-        if (propertyConfig.required) {
-          self.required.push(property);
-        }
-      }
-      return properties;
-    }, {});
+    .reduce(filterPropertyNodes, [])
+    .map(function (node) {
+      return extend(node.node, {
+        path: node.path
+      });
+    });
+  this.required = this.properties
+    .filter(function (property) {
+      return property.required;
+    })
+    .map(function (property) {
+      return property.key;
+    });
 }
 
 Schema.prototype.parse = function (config) {
-  var self = this;
-  var keys = Object.keys(config);
-  assertRequired(this.required, keys);
-  return keys.reduce(function (parsed, key) {
-    var propertyConfig = self.properties[key];
-    if (propertyConfig) {
-      parsed.set(propertyConfig.path, config[key]);
-    }
+  assertRequired(this.required, Object.keys(config));
+  return this.properties.reduce(function (parsed, property) {
+    parsed.set(property.path, config[property.key]);
     return parsed;
   }, traverse({})).value;
 };
+
+function filterPropertyNodes (propertyNodes, value) {
+  if (isProperty(value)) propertyNodes.push(this);
+  return propertyNodes;
+}
+
+function isProperty (node) {
+  return typeof node.key !== 'undefined';
+}
 
 function assertRequired (required, provided) {
   var missing = difference(required, provided);
   if (missing.length) {
     throw new Error('Required configuration keys missing: ' + missing.join(', '));
   }
-}
-
-function isProperty (node) {
-  return typeof node.property !== 'undefined';
 }
 
 module.exports = Schema;
