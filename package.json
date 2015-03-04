@@ -1,6 +1,6 @@
 {
   "name": "confidential",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Load and cast flat key-value configuration (e.g. environment variables) into a hierarchical schema",
   "main": "./src",
   "directories": {
