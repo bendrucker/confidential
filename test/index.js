@@ -51,3 +51,23 @@ test('required properties', function (t) {
   t.throws(schema.parse.bind(schema, {}), /missing: VAL$/, 'throws with missing props');
   t.end();
 });
+
+test('using types', function (t) {
+  var schema = new Schema({
+    foo: {
+      bar: {
+        key: 'ENV_KEY',
+        type: Boolean
+      }
+    }
+  });
+  var parsed = schema.parse({
+    ENV_KEY: 'True'
+  });
+  t.deepEqual(parsed, {
+    foo: {
+      bar: true
+    }
+  });
+  t.end();
+});
