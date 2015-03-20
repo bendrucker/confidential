@@ -5,6 +5,9 @@ exports.cast = function (value, type) {
   if (type === Boolean || type === 'boolean') {
     return boolean(value);
   }
+  if (type === Number || type === 'number') {
+    return number(value);
+  }
   return value;
 };
 
@@ -18,4 +21,8 @@ function boolean (value) {
     default:
       return !!value;
   }
+}
+
+function number (value) {
+  return Number(value);
 }

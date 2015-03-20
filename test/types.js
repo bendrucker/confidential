@@ -33,6 +33,14 @@ test('types', function (t) {
 
   });
 
+  t.test('number', function (t) {
+
+    t.equal(types.cast(1, Number), 1);
+    t.equal(types.cast('1', 'number'), 1);
+    t.end();
+
+  });
+
   t.end();
 
 });
