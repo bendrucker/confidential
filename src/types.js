@@ -1,6 +1,14 @@
 'use strict';
 
-exports.boolean = function (value) {
+exports.cast = function (value, type) {
+  if (!type) return value;
+  if (type === Boolean || type === 'boolean') {
+    return boolean(value);
+  }
+  return value;
+};
+
+function boolean (value) {
   switch (typeof value) {
     case 'boolean':
       return value;
@@ -9,4 +17,4 @@ exports.boolean = function (value) {
     default:
       return !!value;
   }
-};
+}

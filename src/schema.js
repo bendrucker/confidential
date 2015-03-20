@@ -3,7 +3,7 @@
 var traverse   = require('traverse');
 var extend     = require('xtend');
 var difference = require('array-differ');
-var parsers    = require('./parsers');
+var types      = require('./types');
 
 function Schema (schema) {
   this.properties = traverse(schema)
@@ -25,7 +25,7 @@ function Schema (schema) {
 Schema.prototype.parse = function (config) {
   assertRequired(this.required, Object.keys(config));
   return this.properties.reduce(function (parsed, property) {
-    var value = cast(config[property.key], property.type);
+    var value = types.cast(config[property.key], property.type);
     parsed.set(property.path, value);
     return parsed;
   }, traverse({})).value;
@@ -45,14 +45,6 @@ function assertRequired (required, provided) {
   if (missing.length) {
     throw new Error('Required configuration keys missing: ' + missing.join(', '));
   }
-}
-
-function cast (value, type) {
-  if (!type) return value;
-  if (type === Boolean || type === 'boolean') {
-    return parsers.boolean(value);
-  }
-  return value;
 }
 
 module.exports = Schema;
