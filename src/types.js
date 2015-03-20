@@ -13,7 +13,8 @@ function boolean (value) {
     case 'boolean':
       return value;
     case 'string':
-      return (value.toLowerCase() === 'true') ? true : false;
+      var string = value.toLowerCase();
+      return (string === 'true' || string === '1') ? true : false;
     default:
       return !!value;
   }
