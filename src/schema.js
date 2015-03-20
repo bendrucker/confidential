@@ -26,6 +26,7 @@ Schema.prototype.parse = function (config) {
   assertRequired(this.required, Object.keys(config));
   return this.properties.reduce(function (parsed, property) {
     var value = types.cast(config[property.key], property.type);
+    value = (property.transform || identity)(value);
     parsed.set(property.path, value);
     return parsed;
   }, traverse({})).value;
@@ -45,6 +46,10 @@ function assertRequired (required, provided) {
   if (missing.length) {
     throw new Error('Required configuration keys missing: ' + missing.join(', '));
   }
+}
+
+function identity (value) {
+  return value;
 }
 
 module.exports = Schema;

@@ -71,3 +71,25 @@ test('using types', function (t) {
   });
   t.end();
 });
+
+test('transforms', function (t) {
+  var schema = new Schema({
+    foo: {
+      bar: {
+        key: 'ENV_KEY',
+        transform: function (value) {
+          return 'https://' + value;
+        }
+      }
+    }
+  });
+  var parsed = schema.parse({
+    ENV_KEY: 'apple.com'
+  });
+  t.deepEqual(parsed, {
+    foo: {
+      bar: 'https://apple.com'
+    }
+  });
+  t.end();
+});
