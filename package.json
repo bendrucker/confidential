@@ -12,10 +12,11 @@
     "xtend": "~4.0.0"
   },
   "devDependencies": {
+    "covert": "~1.0.1",
     "tape": "~3.5.0"
   },
   "scripts": {
-    "test": "tape test/*.js"
+    "test": "covert test/*.js"
   },
   "repository": {
     "type": "git",
