@@ -6,8 +6,7 @@ var types = require('../src/types');
 test('types', function (t) {
 
   t.equal(types.cast('foo'), 'foo', 'returns value if no type');
-  var r = /foo/
-  t.equal(types.cast(r), r, 'returns value if no type match');
+  t.equal(types.cast('foo', 'invalidtype'), 'foo', 'returns value if no type match');
 
   t.test('boolean', function (t) {
 
